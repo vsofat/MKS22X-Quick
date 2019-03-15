@@ -11,6 +11,7 @@ public class Quick{
 }
 
   public static int partition (int [] data, int start, int end) {
+
   Random rand =  new Random();
   int pivot = Math.abs(rand.nextInt(end-start)) + start;
 
@@ -57,13 +58,25 @@ public static String toString(int[] sorted) {
  }
 
 public static int quickselect(int []data, int max){
-   int partitioned = partition(data, 0, data.length);
-   if(partitioned == max - 1){
-     return data[partitioned];
-   }
-   else{
-     return quickselect(data, max);
-   }
- }
 
+   int partitioned = partition(data, 0, data.length - 1);
+   int high = data.length - 1;
+   int low = 0;
+
+   while (max != partitioned){
+    //System.out.println("Pivot is currently: " + partitioned);
+    //System.out.println("Given max is: " + max);
+   if(partitioned > max){
+     high =  partitioned - 1;
+   }
+   else if (partitioned < max){
+     low = partitioned - 1;
+   }
+
+   partitioned = partition(data,high,low);
+
+   }
+
+   return data[max];
+ }
 }
