@@ -7,7 +7,7 @@ public class Quick{
   //System.out.println("ANSWER(999): " + quickselect(ary, 10));
   partition(ary,0,ary.length);
   System.out.println(toString(ary));
-//  System.out.println(quickselect(ary,3));
+  System.out.println(quickselect(ary,3));
 }
 
   public static int partition (int [] data, int start, int end) {
@@ -15,16 +15,17 @@ public class Quick{
   Random rand =  new Random();
   int pivot = Math.abs(rand.nextInt(end-start)) + start;
 
-  swapValues(data,start,pivot);
+  if (start == end){
+    return start;
+  }
+  else{
+    swapValues(data,start,pivot);
+    pivot = 0;
+    start = 1;
+  }
 
   //debugging
   //System.out.println("Pivot is currently: " + data[0]);
-
-  if (start != pivot){
-    swapValues(data,start,pivot);
-    pivot = start;
-    start++;
-  }
 
   while (start != end) {
     if (data[start] > data[pivot]) {
