@@ -17,11 +17,14 @@ public class Quick{
 
   swapValues(data,start,pivot);
 
-  pivot = 0;
-  start++;
-
   //debugging
   //System.out.println("Pivot is currently: " + data[0]);
+
+  if (start != pivot){
+    swapValues(data,start,pivot);
+    pivot = start;
+    start++;
+  }
 
   while (start != end) {
     if (data[start] > data[pivot]) {
@@ -35,6 +38,7 @@ public class Quick{
   // compare start and pivot and move based off values
   if (data[start] > data[pivot]){
     swapValues(data,start-1,pivot);
+    pivot = start - 1;
   }
   else{
     swapValues(data,start,pivot);
@@ -70,7 +74,7 @@ public static int quickselect(int []data, int max){
      high =  partitioned - 1;
    }
    else if (partitioned < max){
-     low = partitioned - 1;
+     low = partitioned + 1;
    }
 
    partitioned = partition(data,high,low);
