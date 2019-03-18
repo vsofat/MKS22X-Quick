@@ -3,7 +3,7 @@
 public class Quick{
 
   public static void main(String[] args) {
-  int[] ary = {999,999,100,4,1,0,3,2,999,999,999};
+  int[] ary = {1000, 999,999,999,0,0,1000,1000,0};;
   //System.out.println("ANSWER(999): " + quickselect(ary, 10));
   partition(ary,0,ary.length);
   System.out.println(toString(ary));
@@ -65,24 +65,25 @@ public static String toString(int[] sorted) {
 
 public static int quickselect(int []data, int max){
 
-   int partitioned = partition(data, 0, data.length - 1);
    int high = data.length - 1;
    int low = 0;
+   int partitioned = partition(data, low, high);
 
-   while (max != partitioned){
+   while (partitioned != max){
     //System.out.println("Pivot is currently: " + partitioned);
     //System.out.println("Given max is: " + max);
    if(partitioned > max){
      high =  partitioned - 1;
    }
-   else if (partitioned < max){
+   else {
      low = partitioned + 1;
    }
 
-   partitioned = partition(data,high,low);
+   partitioned = partition(data,low,high);
 
    }
 
-   return data[max];
+   return data[partitioned];
  }
+
 }
