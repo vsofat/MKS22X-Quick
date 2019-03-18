@@ -7,45 +7,46 @@ public class Quick{
   //System.out.println("ANSWER(999): " + quickselect(ary, 10));
   partition(ary,0,ary.length);
   System.out.println(toString(ary));
-  System.out.println(quickselect(ary,3));
+  //System.out.println(quickselect(ary,3));
 }
 
   public static int partition (int [] data, int start, int end) {
 
-  Random rand =  new Random();
-  int pivot = Math.abs(rand.nextInt(end-start)) + start;
+  int high = start;
+  int holder = end + 1;
+  int low = end;
 
-  if (start == end){
-    return start;
+  if (low == high){
+    return low;
   }
-  else{
-    swapValues(data,start,pivot);
-    pivot = 0;
-    start = 1;
-  }
+
+  //Random rand =  new Random();
+  int pivotIndex = (int)(Math.random() * ((end-start+1)) + start);
+  int pivot = data[pivotIndex];
+
+  swapValues(data, pivotIndex, low);
 
   //debugging
   //System.out.println("Pivot is currently: " + data[0]);
 
-  while (start != end) {
-    if (data[start] > data[pivot]) {
-      swapValues(data, start, end);
+  while (holder <= start) {
+    if (data[holder] > pivot) {
+      swapValues(data, holder, low);
       end --;
     }
-    else {
+    else if (data[holder] < pivot){
+      swapValues(data, holder, high);
       start ++;
+      holder ++;
+    }
+    else{
+      holder++;
     }
   }
-  // compare start and pivot and move based off values
-  if (data[start] > data[pivot]){
-    swapValues(data,start-1,pivot);
-    pivot = start - 1;
-  }
-  else{
-    swapValues(data,start,pivot);
-    pivot = start;
-  }
-  return pivot;
+
+  swapValues(data, high, low);
+
+  return high;
 }
 
 public static void swapValues(int[] data, int val1, int val2){
