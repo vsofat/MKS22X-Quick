@@ -90,4 +90,14 @@ public static int quickselect(int []data, int max){
 		//quickHelper(data,0,data.length-1);
 	}
 
+  //using class notes
+
+  private static void quickHelper(int[] data, int start, int end) {
+		if (start <= end) {
+			int partitioned = partition(data,start,end);
+			quickHelper(data, partitioned + 1, end);
+			quickHelper(data, 0, partitioned - 1);
+		}
+	}
+
 }
