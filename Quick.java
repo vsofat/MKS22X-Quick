@@ -86,4 +86,8 @@ public static int quickselect(int []data, int max){
    return data[partitioned];
  }
 
+ public static void quicksort(int[] data) {
+		//quickHelper(data,0,data.length-1);
+	}
+
 }
