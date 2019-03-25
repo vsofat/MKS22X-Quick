@@ -8,6 +8,9 @@ public class Quick{
   partition(ary,0,ary.length);
   System.out.println(toString(ary));
   //System.out.println(quickselect(ary,3));*/
+
+  // Mr. K's driver
+
   System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
   int[]MAX_LIST = {1000000000,500,10};
   for(int MAX : MAX_LIST){
@@ -53,25 +56,43 @@ public class Quick{
   }
 
   //Random rand =  new Random();
-  int pivotIndex = (int)(Math.random() * ((end-start+1)) + start);
+  int pivotIndex = (int)(Math.random() * ((end-start)) + start);
   int pivot = data[pivotIndex];
 
-  swapValues(data, pivotIndex, low);
+  swapValues(data, pivotIndex, start);
 
   //debugging
   //System.out.println("Pivot is currently: " + data[0]);
 
   while (holder <= high) {
+    boolean first = true;
+    boolean second = false;
+
+    /*if (data[holder] == data[pivot]){
+      if (first){
+        swapValues(data, holder, low);
+        first = false;
+        second = true;
+        holder++;
+      }
+      if(second){
+        swapValues(data, holder, high);
+        second = false;
+        first = true;
+        holder++;
+      }
+    }*/
+
     if (data[holder] < pivot) {
       holder++;
     }
-    else if (data[holder] == pivot && pivotIndex <= high){
+    else if (data[holder] == pivot && pivotIndex <= end){
       swapValues(data, holder, pivotIndex);
       pivotIndex++;
     }
     else{
       swapValues(data, high, holder);
-      high++;
+      high--;
     }
   }
 
@@ -98,11 +119,14 @@ public static int quickselect(int []data, int max){
 
    int high = data.length - 1;
    int low = 0;
-   int partitioned = partition(data, low, high);
+   int partitioned = -100;
 
    while (partitioned != max){
+     partitioned = partition(data,low,high);
+
     //System.out.println("Pivot is currently: " + partitioned);
     //System.out.println("Given max is: " + max);
+
    if(partitioned > max){
      high =  partitioned - 1;
    }
@@ -110,24 +134,22 @@ public static int quickselect(int []data, int max){
      low = partitioned + 1;
    }
 
-   partitioned = partition(data,low,high);
-
    }
 
    return data[partitioned];
  }
 
  public static void quicksort(int[] data) {
-		//quickHelper(data,0,data.length-1);
+		quickHelper(data,0,data.length-1);
 	}
 
-  //using class notes
+  //using class notest
 
   private static void quickHelper(int[] data, int start, int end) {
 		if (start <= end) {
 			int partitioned = partition(data,start,end);
 			quickHelper(data, partitioned + 1, end);
-			quickHelper(data, 0, partitioned - 1);
+			quickHelper(data, start, partitioned - 1);
 		}
 	}
 
