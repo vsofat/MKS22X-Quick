@@ -113,7 +113,7 @@ public class Quick{
   }
 
   public static int quickSelectHelper(int[] data, int max, int low, int high){
-    int partitioned = partition(data, low, high);
+    int partitioned = dutchPartition(data, low, high);
     //System.out.println(partitioned);
     if(partitioned > max - 1){
       return quickSelectHelper(data, max, low, partitioned);
@@ -130,16 +130,72 @@ public class Quick{
   }
 
   public static void insertionsort(int [] data, int low, int high) {
- 		for (int x = low + 1; x <= high; x++) {
- 			for (int y = x; y > low; y--) {
- 				if (data[y] < data[y - 1]) {
- 					int placeholder = data[y];
- 					data[y] = data[y - 1];
- 					data[y - 1] = placeholder;
- 		  	}
- 			}
- 		}
- 	}
+    for (int x = low + 1; x <= high; x++) {
+      for (int y = x; y > low; y--) {
+        if (data[y] < data[y - 1]) {
+          int placeholder = data[y];
+          data[y] = data[y - 1];
+          data[y - 1] = placeholder;
+        }
+      }
+    }
+  }
+
+  public static int[] dutchPartition(int[] data, int low, int high){
+
+    int mid = (low + high) / 2;
+    int index = mid;
+
+    if(data[low] > data[high] && data[low] < data[mid] || data[low] < data[high] && data[low] > data[mid]){
+      index = low;
+    }
+    if(data[high] > data[low] && data[high] < data[mid] || data[high] < data[low] && data[high] > data[mid]){
+      index = high;
+    }
+
+    int lt = low;
+    int gt = high;
+    int ind = lt;
+    int pivot = data[index];
+    int temp = data[low];
+    data[lt] = pivot;
+    data[index] = temp;
+    index = lt;
+    lt++;
+
+    while (index <= gt) {
+
+      if (data[ind] > pivot){
+        int placeholder = data[ind];
+        data[ind] = data[gt];
+        data[gt] = placeholder;
+        gt--;
+      }
+
+      else if(data[ind] == pivot){
+        ind++;
+      }
+
+      else{
+
+        int placeholder2 = data[ind];
+        data[ind] = data[lt];
+        data[lt] = placeholder2;
+        lt++;
+        index++;
+      }
+    }
+    lt--;
+
+    int placeholder3 = data[index];
+    data[index] = data[lt];
+    data[lt] = placeholder3;
+    int[] result = new int[]{
+      lt, gt
+    };
+
+    return result;
+  }
 
   private static void quickHelper(int[] data, int low, int high) {
     if (low < high) {
