@@ -3,11 +3,6 @@ import java.util.*;
 public class Quick{
 
   public static void main(String[] args) {
-    /*int[] ary = {1000, 999,999,999,0,0,1000,1000,0};;
-    //System.out.println("ANSWER(999): " + quickselect(ary, 10));
-    partition(ary,0,ary.length);
-    System.out.println(toString(ary));
-    //System.out.println(quickselect(ary,3));*/
 
     // Mr. K's driver
 
@@ -134,7 +129,17 @@ public class Quick{
     quickHelper(data,0,data.length-1);
   }
 
-  //using class notest
+  public static void insertionsort(int [] data, int low, int high) {
+ 		for (int x = low + 1; x <= high; x++) {
+ 			for (int y = x; y > low; y--) {
+ 				if (data[y] < data[y - 1]) {
+ 					int placeholder = data[y];
+ 					data[y] = data[y - 1];
+ 					data[y - 1] = placeholder;
+ 		  	}
+ 			}
+ 		}
+ 	}
 
   private static void quickHelper(int[] data, int low, int high) {
     if (low < high) {
