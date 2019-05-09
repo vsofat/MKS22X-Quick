@@ -45,16 +45,22 @@ public class Quick{
   }
 }
 
-  public static int partition (int [] data, int start, int end) {
+  public static int partition (int [] data, int low, int high) {
 
-  int middle = (start + end) / 2;
-  int low = start;
-  int holder = start + 1;
-  int high = middle;
+    Random rand = new Random();
 
+    int middle = (start + end) / 2;
 
-  if (low == high){
-    return low;
+    int index = middle;
+
+    if(data[start] > data[end] && data[start] < data[middle] || data[start] < data[end] && data[start] > data[middle]){
+      index = start;
+    }
+
+    if(data[end] > data[start] && data[end] < data[middle] || data[end] < data[start] && data[end] > data[middle]){
+      index = end;
+    }
+
   }
 
   //Random rand =  new Random();
@@ -69,21 +75,6 @@ public class Quick{
   while (holder <= high) {
     boolean first = true;
     boolean second = false;
-
-    /*if (data[holder] == data[pivot]){
-      if (first){
-        swapValues(data, holder, low);
-        first = false;
-        second = true;
-        holder++;
-      }
-      if(second){
-        swapValues(data, holder, high);
-        second = false;
-        first = true;
-        holder++;
-      }
-    }*/
 
     if (data[holder] < pivot) {
       holder++;
