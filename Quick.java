@@ -47,9 +47,11 @@ public class Quick{
 
   public static int partition (int [] data, int start, int end) {
 
+  int middle = (start + end) / 2;
   int low = start;
   int holder = start + 1;
-  int high = end;
+  int high = middle;
+
 
   if (low == high){
     return low;
@@ -147,9 +149,9 @@ public static int quickselect(int []data, int max){
 
   private static void quickHelper(int[] data, int start, int end) {
 		if (start <= end) {
-			int partitioned = partition(data,start,end);
-			quickHelper(data, partitioned + 1, end);
-			quickHelper(data, start, partitioned - 1);
+			int pivot = partition(data,start,end);
+			quickHelper(data, start, pivot -1);
+			quickHelper(data, pivot + 1, end);
 		}
 	}
 
