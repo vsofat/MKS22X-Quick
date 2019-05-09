@@ -113,15 +113,20 @@ public class Quick{
   }
 
   public static int quickSelectHelper(int[] data, int max, int low, int high){
-    int partitioned = dutchPartition(data, low, high);
-    //System.out.println(partitioned);
-    if(partitioned > max - 1){
-      return quickSelectHelper(data, max, low, partitioned);
+    int[] partitioned = dutchPartition (data, low, high);
+
+    if(max <= partitioned[1] && max >= partitioned[0]){
+      return data[partitioned[1]];
     }
-    if(partitioned < max - 1){
-      return quickSelectHelper(data, max, partitioned, high);
+    if(high - low < 5){
+      insertionsort(data, low, high);
+      return data[max];
     }
-    else return data[partitioned];
+
+    if(partitioned[0] > max){
+      return quickSelectHelper(data, max, low, partitioned[0]);
+    }
+    return quickSelectHelper(data, max, partitioned[1], high);
   }
 
 
