@@ -49,50 +49,54 @@ public class Quick{
 
     Random rand = new Random();
 
-    int middle = (start + end) / 2;
+    int middle = (low + high) / 2;
 
     int index = middle;
 
-    if(data[start] > data[end] && data[start] < data[middle] || data[start] < data[end] && data[start] > data[middle]){
-      index = start;
+    if(data[low] > data[high] && data[low] < data[middle] || data[low] < data[high] && data[low] > data[middle]){
+      index = low;
     }
 
-    if(data[end] > data[start] && data[end] < data[middle] || data[end] < data[start] && data[end] > data[middle]){
-      index = end;
+    if(data[high] > data[low] && data[high] < data[middle] || data[high] < data[low] && data[high] > data[middle]){
+      index = high;
     }
 
+    int pivot = data[index];
+    int temp = data[low];
+    data[low] = pivot;
+    data[index] = temp;
+    index = low;
+    low++;
+
+    while (low != high) {
+      if (data[low] > pivot || (data[low] == pivot && Math.random() > 0.50)){
+        int temp2 = data[low];
+        data[low] = data[high];
+        data[high] = temp2;
+        high--;
+      }
+    else {
+      low++;
+      }
+    }
+
+    if (data[index] < data[low]){
+    low--;
+    }
+
+    int min = data[low];
+    data[index] = min;
+    data[low] = pivot;
+    int num = -1;
+
+  for(int i = low; i <= high; i++){
+    if(data[i] == pivot){
+      num = i;
+    }
   }
-
-  //Random rand =  new Random();
-  int pivotIndex = (int)(Math.random() * ((end-start)) + start);
-  int pivot = data[pivotIndex];
-
-  swapValues(data, pivotIndex, start);
-
-  //debugging
-  //System.out.println("Pivot is currently: " + data[0]);
-
-  while (holder <= high) {
-    boolean first = true;
-    boolean second = false;
-
-    if (data[holder] < pivot) {
-      holder++;
-    }
-    else if (data[holder] == pivot && pivotIndex <= end){
-      swapValues(data, holder, pivotIndex);
-      pivotIndex++;
-    }
-    else{
-      swapValues(data, high, holder);
-      high--;
-    }
+  //System.out.println(pivot);
+  return num;
   }
-
-  swapValues(data, low, high);
-
-  return high;
-}
 
 public static void swapValues(int[] data, int val1, int val2){
   int holder = data[val1];
@@ -113,11 +117,11 @@ public static int quickselect(int []data, int max){
   return quickSelectHelper(data, max, 0, high);
  }
 
-public static int quickSelectHelper(int[] data, int max, int start, int high){
-  int partitioned = partition(data, start, high);
+public static int quickSelectHelper(int[] data, int max, int low, int high){
+  int partitioned = partition(data, low, high);
   //System.out.println(partitioned);
   if(partitioned > max - 1){
-    return quickSelectHelper(data, max, start, partitioned);
+    return quickSelectHelper(data, max, low, partitioned);
   }
   if(partitioned < max - 1){
     return quickSelectHelper(data, max, partitioned, high);
@@ -132,11 +136,11 @@ public static int quickSelectHelper(int[] data, int max, int start, int high){
 
   //using class notest
 
-  private static void quickHelper(int[] data, int start, int end) {
-		if (start <= end) {
-			int pivot = partition(data,start,end);
-			quickHelper(data, start, pivot -1);
-			quickHelper(data, pivot + 1, end);
+  private static void quickHelper(int[] data, int low, int high) {
+		if (low <= high) {
+			int pivot = partition(data,low,high);
+			quickHelper(data, low, pivot -1);
+			quickHelper(data, pivot + 1, high);
 		}
 	}
 
