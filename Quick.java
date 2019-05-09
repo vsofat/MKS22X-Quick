@@ -118,28 +118,22 @@ public static String toString(int[] sorted) {
  }
 
 public static int quickselect(int []data, int max){
-
-   int high = data.length - 1;
-   int low = 0;
-   int partitioned = -100;
-
-   while (partitioned != max){
-     partitioned = partition(data,low,high);
-
-    //System.out.println("Pivot is currently: " + partitioned);
-    //System.out.println("Given max is: " + max);
-
-   if(partitioned > max){
-     high =  partitioned - 1;
-   }
-   else {
-     low = partitioned + 1;
-   }
-
-   }
-
-   return data[partitioned];
+  int high = data.length - 1;
+  return quickSelectHelper(data, max, 0, high);
  }
+
+public static int quickSelectHelper(int[] data, int max, int start, int high){
+  int partitioned = partition(data, start, high);
+  //System.out.println(partitioned);
+  if(partitioned > max - 1){
+    return quickSelectHelper(data, max, start, partitioned);
+  }
+  if(partitioned < max - 1){
+    return quickSelectHelper(data, max, partitioned, high);
+  }
+  else return data[partitioned];
+}
+
 
  public static void quicksort(int[] data) {
 		quickHelper(data,0,data.length-1);
